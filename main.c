@@ -30,7 +30,7 @@ int main (int argc, char **argv) {
     opterr = 0;
 
 
-    while ((c = getopt (argc, argv, "hpnc:")) != -1)
+    while ((c = getopt (argc, argv, "hpn:")) != -1)
         switch (c)
         {
             case 'h':
@@ -43,12 +43,10 @@ int main (int argc, char **argv) {
                 break;
             case 'n':
                 newPrint();
-                break;
-            case 'c':
                 cvalue = optarg;
                 break;
             case '?':
-                if (optopt == 'c')
+                if (optopt == 'n')
                     fprintf (stderr, "Option -%c requires an argument.\n", optopt);
                 else if (isprint (optopt))
                     fprintf (stderr, "Unknown option `-%c'.\n", optopt);
@@ -67,6 +65,7 @@ int main (int argc, char **argv) {
 
     for (index = optind; index < argc; index++)
         printf ("Non-option argument %s\n", argv[index]);
+
     return 0;
 }
 
