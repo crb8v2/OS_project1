@@ -1,1 +1,20 @@
-readme
+
+Connor Baniak
+CS4760
+Assignment 1
+
+Exercise 3.8 on page 87 of the UNIX book
+
+SYNTAX:
+-h  help menu
+-p  test perror
+-n int int int  runs fork process, (number of forks) (work for each fork) (delay)
+
+While learning to use version control through github, I wanted to create a fresh
+repository to prevent format errors I was unsure of how to erase. The following is the
+repository for the first half of my project:
+    https://github.com/crb8v2/4760_os_project1
+
+
+The following is the second repository created with the most up to date commits:
+    https://github.com/crb8v2/OS_project1
