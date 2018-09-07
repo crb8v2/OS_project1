@@ -9,10 +9,10 @@
 #include <sys/wait.h>
 
 void forkerMaster (int n, int k, int m) {
-
     pid_t childpid = 0;
     int counter1, counter2;
 
+    // creates a chain of 'n' processes
     for (counter1 = 1; counter1 < n; counter1++) {
         sleep(2);
         if((childpid = fork()))
