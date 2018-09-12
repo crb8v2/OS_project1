@@ -8,9 +8,16 @@
 
 #include <sys/wait.h>
 
-void forkerMaster (int n, int k, int m) {
+void forkerMaster (int n, int k, int m, int nchars) {
     pid_t childpid = 0;
     int counter1, counter2;
+    int counter = 0;
+
+    int i = 0;
+    char a, *input;
+    input = (char *) malloc(sizeof(char));
+
+    char mybuf[nchars+1];
 
     // creates a chain of 'n' processes
     for (counter1 = 1; counter1 < n; counter1++) {
@@ -19,21 +26,38 @@ void forkerMaster (int n, int k, int m) {
             break;
     }
 
+
+
     // for loop that spins of 'k' work to do for this fork
     for (counter2 = 0; counter2 < k; counter2++) {
 
-        fprintf(stderr, "i:%d process ID:%ld parent ID:%ld child ID:%ld\n", counter1,
-                (long) getpid(), (long) getppid(), (long) childpid);
+//        fprintf(stderr, "i:%d process ID:%ld parent ID:%ld child ID:%ld\n", counter1,
+//                (long) getpid(), (long) getppid(), (long) childpid);
+
 
 //        // step 7 from the book
-//        fprintf(stderr, "i:%d", counter1);
-//        fprintf(stderr, "process ID:%ld ", (long)getpid());
-//        fprintf(stderr, "parent ID:%ld ", (long)getppid());
-//        fprintf(stderr,"child ID:%ld\n", (long)childpid);
+        fprintf(stderr, "i:%d", counter1);
+        fprintf(stderr, "process ID:%ld ", (long) getpid());
+        fprintf(stderr, "parent ID:%ld ", (long) getppid());
+//        fprintf(stderr, "child ID:%ld\n", (long) childpid);
+
+//        printf("\n\n Enter a string to be read from: ");
+        printf("Input a string, press enter when done: ");
+    }
+
+        while((a = getchar()) != '\n') {
+            realloc(input, (sizeof(char)));
+            input[i++] = a;
+        }
+
+
+        input[i] = '\0';
+
+        printf("\nYou entered the string: %s\n", input);
 
         sleep(m);
     }
-}
+
 
 void helpMenu() {
     printf("\n -- HELP MENU --\n");
@@ -44,14 +68,19 @@ void helpMenu() {
 
 int main (int argc, char **argv) {
 
-    int n, k, m, c;
+    int n, k, m, nchars;
+    char c;
+
+
+    char mybuf[100];
 
     // get command line values
     n = atoi(argv[2]);
     k = atoi(argv[3]);
     m = atoi(argv[4]);
+    nchars = atoi(argv[5]);
 
-    while ((c = getopt (argc, argv, "hpn")) != -1)
+    while ((c = getopt (argc, argv, "hpn:")) != -1)
         switch (c)
         {
             case 'h':
@@ -61,12 +90,16 @@ int main (int argc, char **argv) {
                 break;
             case 'n':
                     // checks for proper number of args
-                    if (argc != 5) {
+                    if (argc != 6) {
                         fprintf(stderr, "Invalid number of command line args.");
                         return 1;
                     }
-                forkerMaster(n,k,m);
+
+
+
+                forkerMaster(n,k,m, nchars);
                 break;
+
             case '?':
                 if (optopt == 'n')
                     fprintf (stderr, "Option -%c requires an argument.\n", optopt);
