@@ -3,18 +3,44 @@ Connor Baniak
 CS4760
 Assignment 1
 
-Exercise 3.8 on page 87 of the UNIX book
+Exercise 3.8-8 on page 87 of the UNIX book
+
+This program creates n forks and has each fork read characters from std input 
+	into a buffer and terminates. Confusion ensues, as it should. The
+	children all race for the input, as there is not a std input for each
+	child.
+
+
 
 SYNTAX:
--h  help menu
--p  test perror
--n int int int  runs fork process, (number of forks) (work for each fork) (delay)
+-h  	help menu
+-p  	test perror
+-n int int	, (number of forks) (nchars)
 
-While learning to use version control through github, I wanted to create a fresh
-repository to prevent format errors I was unsure of how to erase. The following is the
-repository for the first half of my project:
-    https://github.com/crb8v2/4760_os_project1
+	nchars is the buffer size
+
+make	builds and creates exectuable 'ass1'
+make clean	cleans object files and executables
 
 
-The following is the second repository created with the most up to date commits:
-    https://github.com/crb8v2/OS_project1
+
+
+While learning to use version control on github, I created a monster I did
+	not know how to undo. The following is the repository for the first
+	half of my project:
+    		https://github.com/crb8v2/4760_os_project1
+
+
+The following is the second repository containing the second half,
+	and final copy of my project:
+    		https://github.com/crb8v2/OS_project1
+
+
+Final thoughts:
+	I thought this was a good project to get back into the
+	the semester with C. This was first time I had ever used
+	the command line to push to github, as apposed to using just
+	git. I do have a few specific questions you may be able to help
+	with sometime. The book instructions were a bit confusing.
+	Starting from the basics with forks help be gain a, hopefully,
+	strong understanding for the rest of the semester.
