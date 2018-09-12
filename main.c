@@ -11,34 +11,120 @@
 void forkerMaster (int n, int nchars) {
     pid_t childpid = 0;
     int counter1;
-
-    int count = 0;
+    int counter2 = 0;
 
     int i = 0, j = 0;
     char *mybuf;
     mybuf = (char *) malloc(sizeof(char));
 
     for (counter1 = 1; counter1 < n; counter1++) {
-        if((childpid = fork()))
+        if ((childpid = fork()))
             break;
     }
 
     printf("Input a string, press enter when done: ");
 
-    for(count = 0;count < nchars; count++){
-        mybuf[count+1] = getchar();
+    for (counter2 = 0; counter2 < nchars; counter2++) {
+        mybuf[counter2 + 1] = getchar();
     }
 
     mybuf[i] = '\0';
 
     printf("\n %ldYou entered the string: ", (long) childpid);
-    for(; j < nchars; j++){
+    for (; j < nchars; j++) {
         printf("%c", mybuf[j]);
     }
-
-//    printf("\n\n");
-
 }
+
+void helpMenu() {
+    printf("\n -- HELP MENU --\n");
+    printf("-n int int int    runs a forking function\n");
+    printf("-h    open help menu\n");
+    printf("-p    generates a test error with perror\n\n");
+}
+
+int main (int argc, char **argv) {
+
+    int n = 0, nchars = 0;
+    int c;
+    char errorString[256];
+
+    while ((c = getopt (argc, argv, "hpn:")) != -1)
+        switch (c)
+        {
+            case 'h':
+                helpMenu();
+                break;
+
+            case 'p':
+                snprintf( errorString, sizeof errorString,
+                        "This, my friend, is an error");
+
+                perror(errorString);
+                break;
+
+            case 'n':
+                    // checks for proper number of args
+                    if (argc != 4) {
+                        fprintf(stderr, "Invalid number of command line args.");
+                        return 1;
+                    }
+
+                    //get command line values
+                    n = atoi(argv[2]);
+                    nchars = atoi(argv[3]);
+
+                    forkerMaster(n, nchars);
+                    break;
+
+            case '?':
+                if (optopt == 'n')
+                    fprintf (stderr, "Option -%c requires an argument.\n", optopt);
+                else if (isprint (optopt))
+                    fprintf (stderr, "Unknown option `-%c'.\n", optopt);
+                else
+                    fprintf (stderr,
+                             "Unknown option character `\\x%x'.\n",
+                             optopt);
+                return 1;
+            default:
+                abort ();
+        }
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //void forkerMaster (int n, int nchars) {
@@ -92,56 +178,5 @@ void forkerMaster (int n, int nchars) {
 //    }
 
 
-void helpMenu() {
-    printf("\n -- HELP MENU --\n");
-    printf("-n int int int    runs a forking function\n");
-    printf("-h    open help menu\n");
-    printf("-p    generates a test error with perror\n\n");
-}
 
-int main (int argc, char **argv) {
 
-//    int k, m;
-    int n, nchars;
-    char c;
-
-    // get command line values
-    n = atoi(argv[2]);
-//    k = atoi(argv[3]);
-//    m = atoi(argv[4]);
-    nchars = atoi(argv[3]);
-
-    while ((c = getopt (argc, argv, "hpn:")) != -1)
-        switch (c)
-        {
-            case 'h':
-                helpMenu();
-                break;
-            case 'p':
-                //snprintf
-                //perror(stringToPerror)
-                break;
-            case 'n':
-                    // checks for proper number of args
-                    if (argc != 4) {
-                        fprintf(stderr, "Invalid number of command line args.");
-                        return 1;
-                    }
-                forkerMaster(n, nchars);
-                break;
-
-            case '?':
-                if (optopt == 'n')
-                    fprintf (stderr, "Option -%c requires an argument.\n", optopt);
-                else if (isprint (optopt))
-                    fprintf (stderr, "Unknown option `-%c'.\n", optopt);
-                else
-                    fprintf (stderr,
-                             "Unknown option character `\\x%x'.\n",
-                             optopt);
-                return 1;
-            default:
-                abort ();
-        }
-    return 0;
-}
