@@ -11,13 +11,11 @@
 void forkerMaster (int n, int k, int m, int nchars) {
     pid_t childpid = 0;
     int counter1, counter2;
-    int counter = 0;
 
-    int i = 0;
-    char a, *input;
-    input = (char *) malloc(sizeof(char));
+    int i = 0, j = 0;
+    char a, *mybuf;
+    mybuf = (char *) malloc(sizeof(char));
 
-    char mybuf[nchars+1];
 
     // creates a chain of 'n' processes
     for (counter1 = 1; counter1 < n; counter1++) {
@@ -31,29 +29,33 @@ void forkerMaster (int n, int k, int m, int nchars) {
     // for loop that spins of 'k' work to do for this fork
     for (counter2 = 0; counter2 < k; counter2++) {
 
-//        fprintf(stderr, "i:%d process ID:%ld parent ID:%ld child ID:%ld\n", counter1,
-//                (long) getpid(), (long) getppid(), (long) childpid);
+        fprintf(stderr, "i:%d process ID:%ld parent ID:%ld child ID:%ld\n", counter1,
+                (long) getpid(), (long) getppid(), (long) childpid);
 
 
 //        // step 7 from the book
-        fprintf(stderr, "i:%d", counter1);
-        fprintf(stderr, "process ID:%ld ", (long) getpid());
-        fprintf(stderr, "parent ID:%ld ", (long) getppid());
+//        fprintf(stderr, "i:%d ", counter1);
+//        fprintf(stderr, "process ID:%ld ", (long) getpid());
+//        fprintf(stderr, "parent ID:%ld", (long) getppid());
 //        fprintf(stderr, "child ID:%ld\n", (long) childpid);
-
-//        printf("\n\n Enter a string to be read from: ");
-        printf("Input a string, press enter when done: ");
-    }
-
-        while((a = getchar()) != '\n') {
-            realloc(input, (sizeof(char)));
-            input[i++] = a;
         }
 
+        printf("Input a string, press enter when done: ");
 
-        input[i] = '\0';
+        while((a = getchar()) != '\n') {
+            realloc(mybuf, (sizeof(char)));
+            mybuf[i++] = a;
+        }
+        mybuf[i] = '\0';
 
-        printf("\nYou entered the string: %s\n", input);
+
+        printf("\nYou entered the string: ");
+        for(; j < nchars; j++){
+            printf("%c", mybuf[j]);
+            printf("%c", mybuf[j]);
+        }
+
+        printf("\n\n");
 
         sleep(m);
     }
