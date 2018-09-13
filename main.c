@@ -8,15 +8,18 @@
 
 #include <sys/wait.h>
 
+// performs forking and work to be done
 void forkerMaster (int n, int nchars) {
     pid_t childpid = 0;
     int counter1;
     int counter2 = 0;
-
     int i = 0, j = 0;
+    //buffer size for getting stdin chars
     char *mybuf;
+    // allocate that memory
     mybuf = (char *) malloc(sizeof(char));
 
+    // create forks
     for (counter1 = 1; counter1 < n; counter1++) {
         if ((childpid = fork()))
             break;
@@ -24,12 +27,14 @@ void forkerMaster (int n, int nchars) {
 
     printf("Input a string, press enter when done: ");
 
+    // accepts nchar characters in the buff size
     for (counter2 = 0; counter2 < nchars; counter2++) {
         mybuf[counter2 + 1] = getchar();
     }
 
     mybuf[i] = '\0';
 
+    // prints the buff
     printf("\n %ldYou entered the string: ", (long) childpid);
     for (; j < nchars; j++) {
         printf("%c", mybuf[j]);
@@ -49,6 +54,7 @@ int main (int argc, char **argv) {
     int c;
     char errorString[256];
 
+    // for options
     while ((c = getopt (argc, argv, "hpn:")) != -1)
         switch (c)
         {
